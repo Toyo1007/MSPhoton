@@ -2232,6 +2232,19 @@ var ASM_CONSTS = {
       return demangleAll(js);
     }
 
+  function _GetDeviceType() {
+          // userAgent からモバイルデバイスを判定
+          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  
+          if (/android/i.test(userAgent)) {
+              return 1; // Android
+          }
+          if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+              return 2; // iOS
+          }
+          return 0; // PCまたはその他
+      }
+
   function _GetJSMemoryInfo(totalJSptr, usedJSptr) {
       if (performance.memory) {
         HEAPF64[totalJSptr >> 3] = performance.memory.totalJSHeapSize;
@@ -16863,6 +16876,7 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var asmLibraryArg = {
+  "GetDeviceType": _GetDeviceType,
   "GetJSMemoryInfo": _GetJSMemoryInfo,
   "JS_Accelerometer_IsRunning": _JS_Accelerometer_IsRunning,
   "JS_Accelerometer_Start": _JS_Accelerometer_Start,
