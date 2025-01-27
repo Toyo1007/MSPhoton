@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | MSProject</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -103,12 +103,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
-            container.style.width = "100%";
-            container.style.height = "100%";
-        }
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
       }
 
       loadingBar.style.display = "block";
@@ -121,15 +117,8 @@
               }).then((unityInstance) => {
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
-                  var element = canvas;
-                  if (element.requestFullscreen) {
-                      element.requestFullscreen();
-                  } else if (element.webkitRequestFullscreen) {
-                      element.webkitRequestFullscreen(); // iOS用
-                  } else {
-                      alert("このブラウザではフルスクリーンがサポートされていません。");
-                  }
-              };
+                  unityInstance.SetFullscreen(1);
+                };
               }).catch((message) => {
                 alert(message);
               });
